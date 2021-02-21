@@ -1,11 +1,12 @@
 import React from 'react';
 import Task from './components/tasksComponent';
+import TasksInput from './components/tasksInput';
 
 class App extends React.Component {
   constructor () {
     super();
 
-    let initState = {
+    this.initState = {
       tasks : [
         {
           id     : 0,
@@ -26,17 +27,40 @@ class App extends React.Component {
     };
   }
 
-  changeTaskStatus = () => {
+  doneTask = (id) => {
     let stateCopy = { ...this.initState };
-    let status = stateCopy.tasks.status;
+    const index = stateCopy.tasks.map((t) => t.id).indexOf(id);
+    this.setState(() => {
+      let { tasks } = stateCopy;
+      tasks[index].status = true;
+      return tasks;
+    });
+  };
 
-    status ? (status = false) : (status = true);
+  deleteTask = (id) => {
+    let stateCopy = { ...this.initState };
+    const index = stateCopy.tasks.map((t) => t.id).indexOf(id);
+    this.setState(() => {
+      let { tasks } = stateCopy;
+      delete tasks[index];
+      return tasks;
+    });
+  };
 
-    return stateCopy;
+  addTask = (taskTitle) => {
+    let stateCopy = { ...this.initState };
+    this.setState(() => {
+      let { task } = stateCopy;
+      task.push({
+        id     : task.length ? task.length : 0,
+        title  : taskTitle,
+        status : false,
+      });
+    });
   };
 
   render () {
-    let { tasks } = this.state;
+    const { tasks } = this.initState;
 
     let activeTasks = tasks.filter((task) => !task.status);
     let doneTasks = tasks.filter((task) => task.status);
@@ -47,7 +71,10 @@ class App extends React.Component {
         {[
           ...activeTasks,
           ...doneTasks,
-        ].map((t) => <Task task={t} key={t.id} />)}
+        ].map((t) => (
+          <Task doneTask={() => this.doneTask(t.id)} deleteTask={() => this.deleteTask(t.id)} task={t} key={t.id} />
+        ))}
+        <TasksInput addTask={this.addTask} />
       </div>
     );
   }
