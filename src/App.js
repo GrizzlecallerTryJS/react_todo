@@ -6,7 +6,7 @@ class App extends React.Component {
   constructor () {
     super();
 
-    this.initState = {
+    this.state = {
       tasks : [
         {
           id     : 0,
@@ -28,7 +28,7 @@ class App extends React.Component {
   }
 
   doneTask = (id) => {
-    let stateCopy = { ...this.initState };
+    let stateCopy = { ...this.state };
     const index = stateCopy.tasks.map((t) => t.id).indexOf(id);
     this.setState(() => {
       let { tasks } = stateCopy;
@@ -38,7 +38,7 @@ class App extends React.Component {
   };
 
   deleteTask = (id) => {
-    let stateCopy = { ...this.initState };
+    let stateCopy = { ...this.state };
     const index = stateCopy.tasks.map((t) => t.id).indexOf(id);
     this.setState(() => {
       let { tasks } = stateCopy;
@@ -48,19 +48,21 @@ class App extends React.Component {
   };
 
   addTask = (taskTitle) => {
-    let stateCopy = { ...this.initState };
+    debugger;
     this.setState(() => {
-      let { task } = stateCopy;
-      task.push({
-        id     : task.length ? task.length : 0,
+      let { tasks } = this.state;
+      debugger;
+      tasks.push({
+        id     : tasks.length ? tasks.length : 0,
         title  : taskTitle,
         status : false,
       });
+      debugger;
     });
   };
 
   render () {
-    const { tasks } = this.initState;
+    const { tasks } = this.state;
 
     let activeTasks = tasks.filter((task) => !task.status);
     let doneTasks = tasks.filter((task) => task.status);

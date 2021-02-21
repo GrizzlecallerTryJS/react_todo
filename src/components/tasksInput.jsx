@@ -4,32 +4,40 @@ class TasksInput extends React.Component {
   constructor (props) {
     super(props);
 
-    this.initState = {
+    this.state = {
       input : '',
     };
   }
 
   taskTitle = () => {
-    const { input } = this.initState;
+    let stateCopy = { ...this.state };
+    const { input } = stateCopy;
     if (input) {
       this.props.addTask(input);
       this.setState({ input: '' });
     }
+
+    /* const { input } = this.state;
+    if (input) {
+      this.props.addTask(input);
+      this.setState({ input: '' });
+    } */
   };
 
-  inputChange = (event) => {
-    let stateCopy = { ...this.initState };
-    this.setState({ input: event.target.value });
-    debugger;
+  newTaskElement = React.createRef();
+
+  inputChange = () => {
+    let text = this.newTaskElement.current.value;
+    this.setState({ input: text });
   };
 
   render () {
-    const { input } = this.initState;
+    const { input } = this.state;
 
     return (
       <div className='task-input'>
-        <input onChange={this.inputChange} value={input} />
-        <button>Add</button>
+        <input ref={this.newTaskElement} onChange={this.inputChange} value={input} />
+        <button onClick={this.taskTitle}>Add</button>
       </div>
     );
   }
