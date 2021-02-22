@@ -1,6 +1,6 @@
 {
   "name": "todo",
-  "homepage": "https://grizzlecallertryjs.github.io/react_todo"
+  "homepage": "https://grizzlecallertryjs.github.io/react_todo",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
