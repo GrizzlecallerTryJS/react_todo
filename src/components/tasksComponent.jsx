@@ -4,7 +4,7 @@ const Task = ({ task, ...props }) => {
   const ActionBtn = () => {
     return (
       <div className='action-btn'>
-        {!task.status ? <p onClick={props.doneTasks}>✔️</p> : <p onClick={props.deleteTasks}>❌</p>}
+        {!task.status ? <p onClick={props.doneTask}>✔️</p> : <p onClick={props.deleteTask}>❌</p>}
       </div>
     );
   };
